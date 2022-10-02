@@ -36,6 +36,7 @@
 				<br>
 				<a href="#" id="fechar_sessao" class="btn btn-dark">Logout</a>
 				<a href="#" id="abrir_sessao" class="btn btn-dark">Login</a>
+				<a href="#" id="abrir_atividades" class="btn btn-dark">Atividades</a>
 			</div>
 			</form>
 		  </div>
@@ -62,14 +63,22 @@
 			  $( "#resultado" ).html("Bem vindo, " + obj.nome + " !");
 			  $( "#fechar_sessao" ).toggle(true);
 			  $( "#abrir_sessao" ).toggle(false);
+			  $( "#abrir_atividades").toggle(true);
 		  } else {
 			  $( "#fechar_sessao" ).toggle(false);
 			  $( "#abrir_sessao" ).toggle(true);
+			  $( "#abrir_atividades").toggle(false);
 		  }
 		});
 	});
+	$("#abrir_atividades").click(function(){
+		console.log("chegou ate aqui");
+		window.location = "view-gestao-atividades-localstorage.php";
+		
+	});
 
 	$( "#abrir_sessao" ).click(function(){
+		
 		var v2 = $( "#login" ).val();
 		var v3 = $( "#password" ).val();
 		
@@ -94,6 +103,8 @@
 			  $( "#resultado" ).html("Bem vindo, " + obj.nome + " !");
 			  $( "#fechar_sessao" ).toggle(true);
 			  $( "#abrir_sessao" ).toggle(false);
+			  $( "#abrir_atividades").toggle(true);
+			  
 		  }
 		});
 	});

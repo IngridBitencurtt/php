@@ -6,6 +6,9 @@
 		"senha" => "12345",
 		"nome"  => "Luís Felipe"
 	);
+	// $fileJson = file_get_contents(__DIR__ ."../lffsant.json");
+	// $oauth = json_decode($fileJson);
+	// var_dump($oauth);
 	
 	if ($_POST["operation"] == 'load') {
 		
@@ -46,6 +49,7 @@
 	} else {
 		
 		echo '{ "invalid_operation" : "' . $_POST["operation"] . '" }';
+		
 		
 	}
 ?>
