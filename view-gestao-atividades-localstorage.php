@@ -1,12 +1,3 @@
-<?php
-session_start();
-$list_atividades = json_decode($_SESSION["atividades"], true);
-var_dump(
-	$list_atividades["obj"]->nome
-);
-
-?>
-
 <html>
 
 <head>
@@ -41,9 +32,6 @@ var_dump(
 					</tr>
 				</thead>
 				<tbody id="atividades">
-					<?php foreach ($list_atividades as $atividade) : ?>
-						<tr><?= $atividade->atividade ?></tr>
-					<?php endforeach; ?>
 				</tbody>
 				<tfoot style="border-top: 2px solid black;">
 					<tr>
@@ -120,16 +108,16 @@ var_dump(
 
 	<script>
 		var atividades = [];
+		// var list = mockData();
+		// localStorage.setItem("quantidade", list.length);
+		// localStorage.setItem(list);
+		atividades = $.parseJSON(localStorage.getItem("atividades"));
 		var quantidade = localStorage.getItem("quantidade");
 
 		lerSessao();
 
 		function lerSessao() {
 			if (quantidade != null) {
-				for (var i = 0; i < quantidade; i++) {
-					atividades.push($.parseJSON(localStorage.getItem(i)));
-				}
-
 				loadData();
 			} else {
 				localStorage.setItem("quantidade", 0);

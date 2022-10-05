@@ -51,6 +51,7 @@
 	</div>
 
 	<script>
+		var atividades = [];
 		$(document).ready(function() {
 			$("#resultado").html("Login");
 
@@ -62,7 +63,7 @@
 				}
 			}).done(function(resposta) {
 				var obj = $.parseJSON(resposta);
-
+				console.log(obj);
 
 				if (obj.nome != 'undefined') {
 					$("#nome").val(obj.nome);
@@ -102,7 +103,21 @@
 					$("#resultado").html("Usuário e/ou senha inválidos.");
 				}
 			}, ).done(function(resposta) {
+
 				var json = $.parseJSON(resposta);
+				var usuarios = $.parseJSON(json.usuarios);
+				$.map(usuarios.atividades, function(value, index) {
+					atividades.push({
+						index: value.index,
+						atividade: value.atividade,
+						date: value.date,
+						status: value.status
+					});
+				});
+				localStorage.setItem("atividades", JSON.stringify(atividades));
+				localStorage.setItem("quantidade", usuarios.atividades.length);
+
+				console.log(localStorage.getItem("atividades"))
 
 				if (json.status == 'logado') {
 					$("#nome").val(json.nome);
@@ -116,6 +131,17 @@
 				}
 			});
 		});
+
+		function mockData() {
+			foreach()
+
+			atividades.push({
+				index: "1",
+				atividade: "Atividade 1",
+				date: "05/04/2022 - 08:30:00",
+				status: "done"
+			});
+		}
 
 		$("#fechar_sessao").click(function() {
 			$.ajax({

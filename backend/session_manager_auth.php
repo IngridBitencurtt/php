@@ -30,12 +30,15 @@ if ($_POST["operation"] == 'load') {
 			$_SESSION["nome"] = $banco_dados_mock["nome"];
 			$_SESSION["login"] = $banco_dados_mock["login"];
 			$fileJson = file_get_contents(__DIR__ . "../../lffsant.json");
-			$oauth = json_encode(array("obj" => $fileJson, "status" => "logado"));
-			$_SESSION["atividades"] = $oauth;
+			// $usuarios = (object) [...(array)json_decode($fileJson)];
+			$json = json_encode([
+				"usuarios" =>$fileJson,
+				"nome" => $_SESSION["nome"],
+				"login" => $_SESSION["login"],
+				"status" => "logado"
+			]);
 
-			echo '{ "nome" : "' . $_SESSION["nome"] .
-				'", "login" : "' . $_SESSION["login"] .
-				'", "status" : "logado" }';
+			echo $json;
 		} else {
 			echo '{ "status" : "nao_logado" }';
 			header('HTTP/1.0 401 Unauthorized');
