@@ -108,6 +108,8 @@
 
 	<script>
 		var atividades = [];
+		var action;
+		var obj_atividade = {};
 		// var list = mockData();
 		// localStorage.setItem("quantidade", list.length);
 		// localStorage.setItem(list);
@@ -278,13 +280,22 @@
 		$('.btn-criar').click(function() {
 			addItem($("#txtCriarAtividade").val());
 			$("#txtCriarAtividade").val("");
+
+			action = 'add';
 		});
 
 		$('.btn-editar').click(function() {
+
+			obj_atividade = {
+				row: $("#rowEdit").val(),
+				name: $("#txtModificarAtividade").val()
+			};
 			editItem(
-				$("#rowEdit").val(),
-				$("#txtModificarAtividade").val()
+				obj_atividade.row,
+				obj_atividade.atividade
 			);
+			action = 'edit';
+			ajaxAction(action, obj_atividade);
 
 			$("#rowEdit").val("");
 			$("#txtModificarAtividade").val("");
@@ -294,6 +305,8 @@
 			deleteItem(
 				$("#rowDelete").val()
 			);
+			action = 'delete';
+
 
 			$("#rowDelete").val("");
 			$("#deleteAtividade").text("");
@@ -303,24 +316,48 @@
 			var id = element.currentTarget.id;
 
 			if (id.includes("edit")) {
+
 				var row = id.replace("edit", "");
 				var contentId = "#content" + row;
 				$("#txtModificarAtividade").val($(contentId).html());
 				$("#rowEdit").val(row);
 				$('#myModalEditar').modal('show');
 			} else if (id.includes("delete")) {
+
 				var row = id.replace("delete", "");
 				var contentId = "#content" + row;
 				$("#deleteAtividade").text($(contentId).html());
 				$("#rowDelete").val(row);
 				$('#myModalDeletar').modal('show');
 			} else if (id.includes("add")) {
+
 				$('#myModalCriar').modal('show');
 			} else if (id.includes("done")) {
 				var row = id.replace("done", "");
 				markDone(row);
 			}
+
+
 		});
+
+		function ajaxAction(action, obj_atividade) {
+			$.ajax({
+				method: "POST",
+				url: "../backend/crud.php",
+				data: {
+					obj_atividade: obj_atividade
+				},
+				beforeSend: function(xhr) {
+					xhr.setRequestHeader("Authorization", "Basic " + btoa(v2 + ":" + v3));
+				},
+				error: function(xhr) {
+					$("#resultado").html("Usuário e/ou senha inválidos.");
+				}
+			}, ).done(function(resposta) {
+
+			});
+
+		}
 	</script>
 </body>
 

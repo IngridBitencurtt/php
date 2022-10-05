@@ -1,6 +1,19 @@
-<?php
+<!DOCTYPE html>
+<html lang="en">
 
-$fileJson = file_get_contents(__DIR__ . "/lffsant.json");
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
 
-$oauth = json_decode($fileJson);
-print_r($oauth);
+<body>
+    <form action="./backend/crud.php" name="test" method="post" >
+
+        <button class="green">Send</button>
+    </form>
+
+</body>
+
+</html>

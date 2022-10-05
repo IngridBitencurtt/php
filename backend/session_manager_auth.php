@@ -10,8 +10,16 @@ $banco_dados_mock = array(
 if ($_POST["operation"] == 'load') {
 
 	if (isset($_SESSION["login"])) {
-		echo '{ "nome" : "' . $_SESSION["nome"] .
-			'", "login" : "' . $_SESSION["login"] . '" }';
+		$_SESSION["nome"] = $banco_dados_mock["nome"];
+		$_SESSION["login"] = $banco_dados_mock["login"];
+		$fileJson = file_get_contents(__DIR__ . "../../lffsant.json");
+		// $usuarios = (object) [...(array)json_decode($fileJson)];
+		$json = json_encode([
+			"usuarios" => $fileJson,
+			"nome" => $_SESSION["nome"],
+			"login" => $_SESSION["login"],
+			"status" => "logado"
+		]);
 	} else {
 		echo '{ "nome" : "undefined" }';
 	}
@@ -32,7 +40,7 @@ if ($_POST["operation"] == 'load') {
 			$fileJson = file_get_contents(__DIR__ . "../../lffsant.json");
 			// $usuarios = (object) [...(array)json_decode($fileJson)];
 			$json = json_encode([
-				"usuarios" =>$fileJson,
+				"usuarios" => $fileJson,
 				"nome" => $_SESSION["nome"],
 				"login" => $_SESSION["login"],
 				"status" => "logado"
