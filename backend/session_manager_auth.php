@@ -36,14 +36,16 @@ if ($_POST["operation"] == 'load') {
 		) {
 			$_SESSION["nome"] = $banco_dados_mock["nome"];
 			$_SESSION["login"] = $banco_dados_mock["login"];
+
+			//D:\Projects\php\ingrid\php\backend\session_manager_auth.php
 			$fileJson = file_get_contents(__DIR__ . "../../lffsant.json");
 
 			$usuarios = (object) [...(array)json_decode($fileJson)];
 
-			if (is_string($usuarios->atividades)) {
+			// if (is_string($usuarios->atividades)) {
 
-				$usuarios->atividades = (array) [...(array)json_decode($usuarios->atividades)];
-			}
+			// 	$usuarios->atividades = (array) [...(array)json_decode($usuarios->atividades)];
+			// }
 
 			$json = json_encode([
 				"usuarios" => $usuarios,

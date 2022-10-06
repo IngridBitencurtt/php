@@ -2,22 +2,13 @@
 session_start();
 $operation = $_POST["operation"];
 $input_atividade = (object)$_POST["input_atividade"];
-// if (!empty($_POST["obj_atividade"])) {
 
 $fileJson = file_get_contents(__DIR__ . "../../lffsant.json");
 $usuarios = (object) [...(array)json_decode($fileJson)];
 
-if (is_string($usuarios->atividades)) {
-
-    $usuarios->atividades = (array) [...(array)json_decode($usuarios->atividades)];
-}
-
-
-
 if ($operation == "add") {
 
-    $input_atividade->index += count($usuarios->atividades);
-    $input_atividade->atividade = "atividade {$input_atividade->index}";
+    $input_atividade->index = count($usuarios->atividades) + 1;
     $input_atividade->date = date("d-m-Y H:i:s");
     $input_atividade->status = "open";
     array_push($usuarios->atividades, $input_atividade);

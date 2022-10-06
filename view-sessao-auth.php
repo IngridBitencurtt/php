@@ -29,7 +29,7 @@
 									<div class="input-group-prepend">
 										<span class="input-group-text" id="inputGroup-sizing-default">Login</span>
 									</div>
-									<input id="login" name="login" type="text" class="form-control" aria-label="Login" aria-describedby="inputGroup-sizing-default" required>
+									<input id="login" name="login" type="text" class="form-control input_login" aria-label="Login" aria-describedby="inputGroup-sizing-default" required>
 								</div>
 								<div class="input-group mb-3">
 									<div class="input-group-prepend">
@@ -52,6 +52,7 @@
 
 	<script>
 		var atividades = [];
+
 		$(document).ready(function() {
 			$("#resultado").html("Login");
 
@@ -106,7 +107,6 @@
 			}, ).done(function(resposta) {
 
 				var json = $.parseJSON(resposta);
-				console.log(json)
 
 				$.map(json.usuarios.atividades, function(value, index) {
 					atividades.push({
