@@ -62,6 +62,7 @@
 					operation: "load"
 				}
 			}).done(function(resposta) {
+				console.log(resposta);
 				var obj = $.parseJSON(resposta);
 				console.log(obj);
 
@@ -105,8 +106,9 @@
 			}, ).done(function(resposta) {
 
 				var json = $.parseJSON(resposta);
-				var usuarios = $.parseJSON(json.usuarios);
-				$.map(usuarios.atividades, function(value, index) {
+				console.log(json)
+
+				$.map(json.usuarios.atividades, function(value, index) {
 					atividades.push({
 						index: value.index,
 						atividade: value.atividade,
@@ -115,7 +117,7 @@
 					});
 				});
 				localStorage.setItem("atividades", JSON.stringify(atividades));
-				localStorage.setItem("quantidade", usuarios.atividades.length);
+				localStorage.setItem("quantidade", atividades.length);
 
 				console.log(localStorage.getItem("atividades"))
 

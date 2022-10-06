@@ -108,8 +108,8 @@
 
 	<script>
 		var atividades = [];
-		var action;
-		var obj_atividade = {};
+		var operation;
+		var input_atividade = {};
 		// var list = mockData();
 		// localStorage.setItem("quantidade", list.length);
 		// localStorage.setItem(list);
@@ -181,19 +181,25 @@
 			for (const [key, value] of Object.entries(atividades)) {
 				if (value.index == row) {
 					value.status = "done";
+					input_atividade = value;
 				}
 			}
 
+			operation = 'edit';
+			operationCrud(operation, input_atividade);
 			loadData();
 		}
 
 		function deleteItem(row) {
 			for (const [key, value] of Object.entries(atividades)) {
 				if (value.index == row) {
+					input_atividade = value;
 					atividades.splice(key, 1);
 					break;
 				}
 			}
+			operation = 'delete';
+			operationCrud(operation, input_atividade);
 
 			loadData();
 		}
@@ -203,11 +209,18 @@
 
 			for (const [key, value] of Object.entries(atividades)) {
 				if (value.index == row) {
+
 					value.atividade = atividade;
 					value.date = datestring;
+
+					input_atividade = value;
+
 					break;
 				}
 			}
+
+			operation = 'edit';
+			operationCrud(operation, input_atividade);
 
 			loadData();
 		}
@@ -219,14 +232,17 @@
 			if ($('#atividades tr:last')[0]) {
 				newRow = parseInt($('#atividades tr:last')[0].id.replace("row", "")) + 1;
 			}
-
-			atividades.push({
+			input_atividade = {
 				index: newRow,
 				atividade: atividade,
 				date: datestring,
 				status: "open"
-			});
+			}
 
+			atividades.push(input_atividade);
+
+			operation = 'add';
+			operationCrud(operation, input_atividade);
 			loadData();
 		}
 
@@ -278,34 +294,29 @@
 		}
 
 		$('.btn-criar').click(function() {
+
+
 			addItem($("#txtCriarAtividade").val());
 			$("#txtCriarAtividade").val("");
 
-			action = 'add';
+
 		});
 
 		$('.btn-editar').click(function() {
-
-			obj_atividade = {
-				row: $("#rowEdit").val(),
-				name: $("#txtModificarAtividade").val()
-			};
 			editItem(
-				obj_atividade.row,
-				obj_atividade.atividade
+				$("#rowEdit").val(),
+				$("#txtModificarAtividade").val()
 			);
-			action = 'edit';
-			ajaxAction(action, obj_atividade);
 
 			$("#rowEdit").val("");
 			$("#txtModificarAtividade").val("");
 		});
 
 		$('.btn-deletar-sim').click(function() {
+
 			deleteItem(
 				$("#rowDelete").val()
 			);
-			action = 'delete';
 
 
 			$("#rowDelete").val("");
@@ -340,21 +351,21 @@
 
 		});
 
-		function ajaxAction(action, obj_atividade) {
+		function operationCrud(operation, input_atividade) {
+
+			console.log(operation, input_atividade)
 			$.ajax({
 				method: "POST",
 				url: "../backend/crud.php",
 				data: {
-					obj_atividade: obj_atividade
-				},
-				beforeSend: function(xhr) {
-					xhr.setRequestHeader("Authorization", "Basic " + btoa(v2 + ":" + v3));
+					input_atividade,
+					operation
 				},
 				error: function(xhr) {
 					$("#resultado").html("Usuário e/ou senha inválidos.");
 				}
 			}, ).done(function(resposta) {
-
+				console.log(resposta);
 			});
 
 		}

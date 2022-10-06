@@ -12,14 +12,13 @@ if ($_POST["operation"] == 'load') {
 	if (isset($_SESSION["login"])) {
 		$_SESSION["nome"] = $banco_dados_mock["nome"];
 		$_SESSION["login"] = $banco_dados_mock["login"];
-		$fileJson = file_get_contents(__DIR__ . "../../lffsant.json");
-		// $usuarios = (object) [...(array)json_decode($fileJson)];
+
 		$json = json_encode([
-			"usuarios" => $fileJson,
 			"nome" => $_SESSION["nome"],
 			"login" => $_SESSION["login"],
 			"status" => "logado"
 		]);
+		echo $json;
 	} else {
 		echo '{ "nome" : "undefined" }';
 	}
@@ -38,9 +37,16 @@ if ($_POST["operation"] == 'load') {
 			$_SESSION["nome"] = $banco_dados_mock["nome"];
 			$_SESSION["login"] = $banco_dados_mock["login"];
 			$fileJson = file_get_contents(__DIR__ . "../../lffsant.json");
-			// $usuarios = (object) [...(array)json_decode($fileJson)];
+
+			$usuarios = (object) [...(array)json_decode($fileJson)];
+
+			if (is_string($usuarios->atividades)) {
+
+				$usuarios->atividades = (array) [...(array)json_decode($usuarios->atividades)];
+			}
+
 			$json = json_encode([
-				"usuarios" => $fileJson,
+				"usuarios" => $usuarios,
 				"nome" => $_SESSION["nome"],
 				"login" => $_SESSION["login"],
 				"status" => "logado"
