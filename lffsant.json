@@ -4,12 +4,6 @@
   "senha": "12345",
   "atividades": [
     {
-      "index": "1",
-      "atividade": "Atividade 1",
-      "date": "05/04/2022 - 08:30:00",
-      "status": "done"
-    },
-    {
       "index": "2",
       "atividade": "Atividade 2",
       "date": "05/04/2022 - 09:30:00",

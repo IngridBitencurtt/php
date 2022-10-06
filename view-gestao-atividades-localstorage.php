@@ -228,7 +228,7 @@
 		function addItem(atividade) {
 			var datestring = getDate();
 			var newRow = 1;
-
+			console.log(atividade)
 			if ($('#atividades tr:last')[0]) {
 				newRow = parseInt($('#atividades tr:last')[0].id.replace("row", "")) + 1;
 			}
